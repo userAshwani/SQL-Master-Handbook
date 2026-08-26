@@ -1,0 +1,39 @@
+PROJECT: Schema Normalizer (pro-2-schema-normalizer)
+======================================================
+
+WHAT TO BUILD:
+  A set of scripts that take a flat, denormalized "raw orders" export and
+  turn it into a proper 3NF schema with foreign keys, a unified reporting
+  view, and CHECK constraints that guard data quality going forward.
+
+SAMPLE SCHEMA:
+  Starting point (denormalized, one wide row per line item):
+    raw_orders (order_id, customer_name, customer_email, product_name,
+                category, quantity, unit_price, order_date)
+
+  Target (normalized, builds on pro-1's customers/products/orders/
+  order_items shape):
+    customers   (customer_id, name, email)
+    products    (product_id, name, category, price)
+    orders      (order_id, customer_id, order_date) with FK to customers
+    order_items (order_item_id, order_id, product_id, quantity, unit_price)
+                with FK to orders and products, CHECK (quantity > 0)
+
+QUERIES TO WRITE:
+  normalize_raw_orders     — 3NF decomposition script (raw_orders → 4 tables)
+  add_order_foreign_keys   — FOREIGN KEY constraint definitions
+  unified_order_report_view— CREATE VIEW joining the normalized tables back
+                              into one readable report
+  order_item_check_constraints — CHECK constraints for quantity/price validity
+
+EXPECTED RESULT:
+  Input:  a raw_orders table with repeated/denormalized customer & product data
+  Output: 4 clean, related tables + a view that reproduces the original
+          report without any data duplication
+
+PREREQUISITE QUESTIONS:
+  ques-7, ques-8, ques-9, ques-10
+
+HOW IT CONNECTS TO THE FINAL PROJECT:
+  The access-control and analytics modules query this normalized schema,
+  not the raw flat export — get the decomposition right here first.

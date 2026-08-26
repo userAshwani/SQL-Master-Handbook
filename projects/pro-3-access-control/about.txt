@@ -1,0 +1,35 @@
+PROJECT: Access Control Layer (pro-3-access-control)
+=======================================================
+
+WHAT TO BUILD:
+  Role-based views that control exactly what data each user role is
+  allowed to see — masking sensitive columns, filtering rows by
+  department/ownership, and computing partially-masked contact fields.
+
+SAMPLE SCHEMA:
+  employees (employee_id, name, email, phone, department, salary, manager_id)
+
+  Roles referenced by these queries:
+    'hr'      — full visibility (salary, unmasked contact info)
+    'manager' — sees only their own department's rows
+    'public'  — no salary, contact info partially masked
+
+QUERIES TO WRITE:
+  masked_salary_view          — role-based VIEW that hides/nulls salary for
+                                 non-hr roles
+  department_row_filter_view  — row-level-filtering VIEW so a manager only
+                                 sees employees in their own department
+  partial_contact_mask        — computed column using SUBSTR to show only
+                                 part of an email/phone number
+
+EXPECTED RESULT:
+  Input:  the full employees table
+  Output: a 'public' role query on employees_masked never returns a raw
+          salary value or a full phone/email string
+
+PREREQUISITE QUESTIONS:
+  ques-11, ques-12, ques-13
+
+HOW IT CONNECTS TO THE FINAL PROJECT:
+  The capstone dashboard queries this layer's views instead of the raw
+  employees table, so sensitive data never leaks into a report by accident.

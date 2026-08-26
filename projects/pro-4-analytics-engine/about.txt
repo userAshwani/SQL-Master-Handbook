@@ -1,0 +1,34 @@
+PROJECT: Analytics Engine (pro-4-analytics-engine)
+=====================================================
+
+WHAT TO BUILD:
+  A set of reporting queries that turn the normalized orders schema (from
+  pro-1/pro-2) into real business intelligence — pivoted category sales,
+  running revenue totals, ranked customers, multi-column sort reports and
+  a single-row KPI summary, the way a BI dashboard would generate them.
+
+SAMPLE SCHEMA:
+  Reuses customers, products, orders, order_items from pro-1/pro-2.
+
+QUERIES TO WRITE:
+  category_sales_pivot     — CASE WHEN + GROUP BY pivot (categories as columns)
+  running_revenue_total    — SUM() OVER (ORDER BY order_date) running total
+  top_customers_rank       — RANK() / DENSE_RANK() customers by total spend
+  multi_column_sales_report— report sorted by multiple columns (e.g. status
+                              then order_date then customer name)
+  kpi_summary               — single-row aggregate KPI query (total revenue,
+                              order count, average order value, distinct
+                              customers)
+
+EXPECTED RESULT:
+  Input:  the orders/order_items/products/customers tables
+  Output: e.g. kpi_summary returns one row like
+          { total_revenue: 232.46, order_count: 4, avg_order_value: 58.12,
+            distinct_customers: 3 }
+
+PREREQUISITE QUESTIONS:
+  ques-14, ques-15, ques-16, ques-17, ques-18
+
+HOW IT CONNECTS TO THE FINAL PROJECT:
+  The capstone dashboard combines these analytics queries with the
+  access-control views from pro-3 into one wired-together report.

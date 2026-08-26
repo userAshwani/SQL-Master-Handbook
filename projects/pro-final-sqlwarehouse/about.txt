@@ -1,0 +1,37 @@
+PROJECT: SQL Warehouse Analytics Engine — Capstone (pro-final-sqlwarehouse)
+=============================================================================
+
+WHAT TO BUILD:
+  The final wiring step: one combined "dashboard" view/query that pulls
+  together the normalized schema (pro-2), the access-controlled views
+  (pro-3) and the analytics queries (pro-4) into a single runnable report,
+  plus a trigger-based audit log that records every change made to the
+  orders table.
+
+SAMPLE SCHEMA:
+  Reuses the full normalized schema from pro-1/pro-2, the role-based views
+  from pro-3, and adds:
+    order_audit_log (log_id, order_id, action, changed_column,
+                      old_value, new_value, changed_at)
+
+QUERIES TO WRITE:
+  warehouse_dashboard_view — a single VIEW/query combining masked customer
+                              info, order KPIs and category sales into one
+                              dashboard-ready result set
+  order_audit_log_trigger  — an AFTER UPDATE (and/or INSERT) TRIGGER on
+                              orders that writes a row into order_audit_log
+                              whenever an order's status changes
+
+EXPECTED RESULT:
+  Input:  the full normalized schema + sample orders
+  Output: querying warehouse_dashboard_view returns one row per customer
+          with masked contact info and their KPI totals; updating an
+          order's status automatically appends a row to order_audit_log
+
+PREREQUISITE QUESTIONS:
+  ques-19, ques-20 (plus all of modules 1.1–1.4 complete)
+
+HOW IT CONNECTS TO THE FINAL PROJECT:
+  This IS the final project — run this module's queries.sql against the
+  full schema to see the entire warehouse pipeline (normalize → mask →
+  analyze → audit) working end-to-end.

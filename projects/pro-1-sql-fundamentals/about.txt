@@ -1,0 +1,34 @@
+PROJECT: SQL Fundamentals (pro-1-sql-fundamentals)
+====================================================
+
+WHAT TO BUILD:
+  The foundational query set every later module in this warehouse project
+  builds on — filtering, sorting, joining, grouping, subqueries, CTEs and
+  a first window function, all against one small e-commerce sample schema.
+
+SAMPLE SCHEMA (see schema.sql for the runnable version):
+  customers    (customer_id, name, email, city, signup_date)
+  products     (product_id, name, category, price)
+  orders       (order_id, customer_id, order_date, status)
+  order_items  (order_item_id, order_id, product_id, quantity, unit_price)
+
+QUERIES TO WRITE:
+  filter_orders_by_city        — SELECT/WHERE/ORDER BY over orders+customers
+  customer_order_join          — INNER JOIN + LEFT JOIN combo report
+  revenue_by_product           — GROUP BY/HAVING aggregate report
+  above_average_spenders       — uncorrelated subquery
+  latest_order_per_customer    — correlated subquery
+  ranked_orders_cte            — CTE (WITH) + ROW_NUMBER() window function
+
+EXPECTED RESULT:
+  Input:  the sample tables loaded from schema.sql
+  Output: each query.sql stub, once filled in, returns a result set
+          matching the Output example described in its ques-N file.
+
+PREREQUISITE QUESTIONS:
+  ques-1, ques-2, ques-3, ques-4, ques-5, ques-6
+
+HOW IT CONNECTS TO THE FINAL PROJECT:
+  Every later module (normalizer, access control, analytics, capstone)
+  reuses this customers/products/orders/order_items schema as its base —
+  build this module solid before moving on.
